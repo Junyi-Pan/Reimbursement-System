@@ -40,7 +40,9 @@ public class TicketService {
         logger.info(String.valueOf(check.isPresent()));
         if(check.isPresent()) {
             logger.info(check.toString());
-            if(check.map(Ticket::getStatus).equals("Pending")) {
+            Ticket curr = check.get();
+            logger.info(curr.getStatus());
+            if(curr.getStatus().equals("Pending")) {
                 logger.info(String.valueOf(ticketRepository.updateTicketStatus(ticketId, status)));
                 ticketRepository.updateTicketStatus(ticketId, status);
                 return status;
