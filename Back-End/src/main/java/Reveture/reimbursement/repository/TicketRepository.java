@@ -12,10 +12,10 @@ import Reveture.reimbursement.entity.Ticket;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long>{
 
-    @Query("SELECT t FROM Ticket t INNER JOIN Account a ON t.postedBy = a.accountId WHERE a.accountId = ?1")
+    @Query("SELECT t FROM Ticket t INNER JOIN Account a ON t.postedBy = a.accountId WHERE a.accountId = ?1 ORDER BY t.ticketId DESC")
     List<Ticket> findTicketsByAccountId(Integer accountId);
 
-    @Query("SELECT t FROM Ticket t WHERE status = ?1")
+    @Query("SELECT t FROM Ticket t WHERE status = ?1 ORDER BY ticketId DESC")
     List<Ticket> findTicketsByPending(String status);
 
     @Modifying

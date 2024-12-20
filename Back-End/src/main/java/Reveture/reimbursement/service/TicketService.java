@@ -1,6 +1,7 @@
 package Reveture.reimbursement.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,14 @@ public class TicketService {
     }
 
     public String updateTicketStatus(Integer ticketId, String status) {
-        ticketRepository.updateTicketStatus(ticketId, status);
-        return status;
+        Optional<Ticket> check = ticketRepository.findById((long)ticketId);
+        if(check.isPresent()) {
+            if(check.map(Ticket::getStatus).equals("Pending")) {
+                ticketRepository.updateTicketStatus(ticketId, status);
+                return status;
+            }
+        }
+        return null;
         
     }
 }
